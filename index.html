@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <h1 x-data="{ message: 'I ❤️ Bangkit' }" x-text="message"></h1>
+
+    <div x-data="{ count: 0 }">
+        <button x-on:click="count++">Increment</button>
+        <span x-text="count"></span>
+        <button x-on:click="count--">Decrement</button>
+        <br>
+        <button x-on:click="count = 0">Reset</button>
+    </div>
+
+    <br>
+    <br>
+
+    <div x-data="{ open: false }">
+        <button @click="open = !open">Toggle</button>
+        <!-- <div x-show="open" @click.outside="open = false"> -->
+        <div x-show="open" x-transition:enter.duration.500ms x-transition:leave.duration.750ms
+            @click.outside="open = false">
+            <p>Content</p>
+        </div>
+        <!-- </div> -->
+    </div>
+    <br>
+    <br>
+
+    <div x-data="{
+        search: '',
+        
+        items: ['kucing', 'singa', 'bebek'],
+
+        get filteredItems() {
+            return this.items.filter(
+                i => i.startsWith(this.search)
+            )
+        }
+    }">
+
+        <input x-model="search" placeholder="Search....">
+
+        <ul>
+            <template x-for="item in filteredItems" :key="item">
+                <li x-text:="item"></li>
+            </template>
+        </ul>
+    </div>
+
+    <br>
+    <br>
+
+</body>
+
+</html>
