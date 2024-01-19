@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alpine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+  <body>
+    <!-- State -->
+    <div x-data="{nama: 'Eric'}">
+      <span x-text="nama"></span>
+    </div>
+
+    <!-- Single element -->
+    <button x-data="{label: 'Klik disini'}" x-text="label"></button>
+
+    <!-- Looping -->
+    <div x-data>
+      <table>
+        <tr>
+          <th>Tahun</th>
+          <th>Nama Mahasiswa</th>
+        </tr>
+        <template x-for="data in $store.mahasiswa">
+          <tr>
+            <td x-text="data.tahun"></td>
+            <td x-text="data.nama"></td>
+          </tr>
+        </template>
+      </table>
+    </div>
+
+    <!-- Data-less -->
+    <button x-data @click="alert('Kamu telah mengklik ini')">Klik Disini</button>
+
+    <!-- X-data -->
+    <div x-data="{nama: 'Eric Julianto'}" class="container mx-auto w-1/2 text-center mt-10 bg-lime-200 p-10 rounded-xl shadow">
+      <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-500 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">Halo, <span x-text="nama"></span></h1>
+    </div>
+
+    <!-- X-html -->
+    <div x-data="{link: '<a href=\'https://braincore.id\' target=\'_blank\'>Braincore</a>'}">
+      <p>Silahkan ke <span x-html="link"></span></p>
+    </div>
+
+    <!-- Toggle -->
+    <div x-data="{open: false}">
+      <button @click="open = !open" x-text="open ? 'Tutup' : 'Buka'" x-bind:class="open ? 'bg-slate-600' : 'bg-violet-600'" class="py-2 mx-auto px-5 text-white rounded-md"></button>
+      <div x-show="open" x-transition.duration.1000ms class="w-3/4 mx-auto mt-4 p-5 bg-blue-400 rounded text-white">Lorem ipsum dolor sit amet</div>
+    </div>
+
+    <!-- x-on -->
+    <div x-data="{pesan: 'Hello World!'}">
+      <button @dblclick="window.alert(pesan)">KLIK SAYA</button>
+    </div>
+
+    <!-- $event -->
+    <div x-data>
+      <button @click="console.log($event.target)">Klik Untuk Informasi</button>
+    </div>
+
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.store("mahasiswa", [
+          { tahun: 2023, nama: "Eric" },
+          { tahun: 2021, nama: "Sandhika" },
+        ]);
+      });
+    </script>
+  </body>
+</html>
